@@ -8,14 +8,52 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "AnimationPlayer",
+"class": "NetworkAnimationPlayer",
+"language": "GDScript",
+"path": "res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd"
+}, {
+"base": "Node",
+"class": "NetworkRandomNumberGenerator",
+"language": "GDScript",
+"path": "res://addons/godot-rollback-netcode/NetworkRandomNumberGenerator.gd"
+}, {
+"base": "Node",
+"class": "NetworkTimer",
+"language": "GDScript",
+"path": "res://addons/godot-rollback-netcode/NetworkTimer.gd"
+} ]
+_global_script_class_icons={
+"NetworkAnimationPlayer": "",
+"NetworkRandomNumberGenerator": "",
+"NetworkTimer": ""
+}
+
 [application]
 
 config/name="StreamingRollback2D"
 config/icon="res://icon.png"
 
+[autoload]
+
+SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/godot-rollback-netcode/plugin.cfg" )
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
+
+[input]
+
+sync_debug={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777254,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+ ]
+}
 
 [mono]
 
