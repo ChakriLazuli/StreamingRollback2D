@@ -33,6 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="StreamingRollback2D"
+run/main_scene="res://scenes/sandbox/sandbox_network_setup.tscn"
 config/icon="res://icon.png"
 
 [autoload]

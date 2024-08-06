@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 0.1
+alignment = 1
+
+[node name="ServerButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+margin_left = 459.0
+margin_right = 511.0
+margin_bottom = 60.0
+text = "Server"
+
+[node name="ClientButton" type="Button" parent="CanvasLayer/HBoxContainer"]
+margin_left = 515.0
+margin_right = 564.0
+margin_bottom = 60.0
+text = "Client"
