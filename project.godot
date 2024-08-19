@@ -39,6 +39,12 @@ config/icon="res://icon.png"
 [autoload]
 
 SyncManager="*res://addons/godot-rollback-netcode/SyncManager.gd"
+SyncDebugger="*res://addons/godot-rollback-netcode/SyncDebugger.gd"
+SyncReplay="*res://addons/godot-rollback-netcode/SyncReplay.gd"
+NetworkLogManager="*res://scripts/network/NetworkLogManager.gd"
+NetworkRngProvider="*res://scripts/network/NetworkRNGProvider.gd"
+NetworkPeerManager="*res://scripts/network/NetworkPeerManager.gd"
+NetworkMasterManager="*res://scripts/network/NetworkMasterManager.gd"
 
 [editor_plugins]
 
@@ -59,6 +65,14 @@ sync_debug={
 [mono]
 
 project/assembly_name="StreamingRollback2D"
+
+[network]
+
+rollback/max_buffer_size=30
+rollback/spawn_manager/reuse_despawned_nodes=true
+rollback/sound_manager/default_sound_bus="Sound"
+rollback/debug/rollback_ticks=5
+rollback/debug/random_rollback_ticks=20
 
 [physics]
 
