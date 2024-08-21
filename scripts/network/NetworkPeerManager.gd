@@ -55,6 +55,7 @@ func _on_network_peer_connected(peer_id: int):
 
 remotesync func set_up_connection(info: Dictionary):
 	NetworkRngProvider.set_master_seed(info['mother_seed'])
+	emit_signal("set_up_connection")
 
 func _on_network_peer_disconnected(peer_id: int):
 	SyncManager.remove_peer(peer_id)
