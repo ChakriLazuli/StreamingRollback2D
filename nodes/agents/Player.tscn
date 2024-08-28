@@ -62,8 +62,8 @@ tracks/1/keys = {
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 2
 script = ExtResource( 2 )
-fall_max_air = 12
-fall_acceleration_air = 2
+fall_max_air = 16
+fall_acceleration_air = 3
 drift_max_air = 12
 drift_acceleration_air = 1
 fall_max_water = 8
@@ -98,11 +98,6 @@ collision_mask = 2
 position = Vector2( 12, -32 )
 cast_to = Vector2( -24, 0 )
 collision_mask = 2
-
-[node name="CheckWater" type="RayCast2D" parent="."]
-position = Vector2( 0, -8 )
-cast_to = Vector2( 0, 16 )
-collision_mask = 4
 
 [node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/DashCurveGround = SubResource( 4 )

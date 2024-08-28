@@ -6,7 +6,7 @@ onready var _dual_grid_tile_map = $DualGridTileMap
 func _ready():
 	get_tree().connect("network_peer_connected", self, "_on_network_peer_connected")
 	NetworkPeerManager.start_local()
-	_dual_grid_tile_map.set_tile_map(_display_tile_map)
+	#_dual_grid_tile_map.set_tile_map(_display_tile_map)
 	#if NetworkPeerManager.IsWebPlatform:
 	#	NetworkPeerManager.start_client()
 	#else:

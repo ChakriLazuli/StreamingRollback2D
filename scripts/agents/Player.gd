@@ -11,7 +11,6 @@ onready var check_down = $CheckDown
 onready var check_up = $CheckUp
 onready var check_right = $CheckRight
 onready var check_left = $CheckLeft
-onready var check_water = $CheckWater
 
 onready var MovementAnimationPlayer = $MovementAnimationPlayer
 onready var ActionAnimationPlayer = $ActionAnimationPlayer
@@ -32,6 +31,7 @@ export var drift_acceleration_ground: int
 
 #Collision
 var attached = AttachSide.NONE
+var current_tile_type: int = 0
 
 #Animation Displacement
 export var animation_x: int = 0
@@ -59,8 +59,14 @@ export var fall_acceleration: int = 0
 var relative_x: int = 0
 var relative_y: int = 0
 
+var momentum_x: int = 0
+var momentum_y: int = 0
+
 var _facing_direction = FacingSide.RIGHT
 var _input_vector: Vector2
+
+export(NodePath) var dual_grid_tile_map_path
+onready var _dual_grid_tile_map: DualGridTileMap = get_node(dual_grid_tile_map_path)
 
 func _ready():
 	add_to_group('network_sync')
@@ -76,13 +82,15 @@ func _get_local_input() -> Dictionary:
 	input["attack"] = Input.is_action_pressed("0_attack")
 	return input
 
-func _network_process(input: Dictionary):	
+func _network_process(input: Dictionary):
+	current_tile_type = _dual_grid_tile_map.get_tile_type_at(global_position)
 	_process_animation_step()
 	_determine_y_displacement()
 	_determine_x_displacement(input)
 	
 	_handle_actions(input)
 	
+	_update_momentum_from_environment()
 	_apply_displacement()
 	
 	_handle_snapping(input)
@@ -142,8 +150,7 @@ func _snap_left():
 		attached = AttachSide.ATTACHED_LEFT
 
 func _set_movement_params():
-	check_water.force_raycast_update()
-	if check_water.is_colliding():
+	if current_tile_type == 2:
 		drift_max = drift_max_water
 		drift_acceleration = drift_acceleration_water
 		fall_max = fall_max_water
@@ -205,13 +212,29 @@ func _determine_x_displacement(input: Dictionary):
 
 func _determine_y_displacement():
 	if gravity_on:
+		#momentum_y = min(0, momentum_y + 1) #increase fall speed up to normal fall speed
+		#excess fall speed should funnel into momentum
 		relative_y += fall_acceleration
+		var excess = relative_y - fall_max
+		if (excess > 0):
+			momentum_y += excess
+			momentum_y = min(0, momentum_y)
 		relative_y = min(relative_y, fall_max)
 	else:
 		relative_y = animation_y_delta
 
+func _update_momentum_from_environment():
+	var tile_momentum = _dual_grid_tile_map.get_momentum_for_tile_type(current_tile_type)
+	var tile_drag = _dual_grid_tile_map.get_drag_for_tile_type(current_tile_type)
+	var momentum_diff_x = tile_momentum.x - momentum_x 
+	var momentum_diff_y = tile_momentum.y - momentum_y
+	var momentum_adjust_x = sign(momentum_diff_x) * min(tile_drag, abs(momentum_diff_x))
+	var momentum_adjust_y = sign(momentum_diff_y) * min(tile_drag, abs(momentum_diff_y))
+	momentum_x += momentum_adjust_x
+	momentum_y += momentum_adjust_y
+
 func _apply_displacement():
-	var displacement = Vector2(relative_x, relative_y)
+	var displacement = Vector2(relative_x, relative_y) + Vector2(momentum_x, momentum_y)
 	move_and_slide(displacement * DISPLACEMENT_MULTIPLIER)
 	position = position.round()
 
@@ -224,6 +247,8 @@ func _save_state() -> Dictionary:
 		drift_acceleration = drift_acceleration,
 		fall_max = fall_max,
 		fall_acceleration = fall_acceleration,
+		momentum_x = momentum_x,
+		momentum_y = momentum_y,
 		relative_x = relative_x,
 		relative_y = relative_y,
 		animation_x = animation_x,
@@ -245,6 +270,8 @@ func _load_state(state: Dictionary):
 	drift_acceleration = state['drift_acceleration']
 	fall_max = state['fall_max']
 	fall_acceleration = state['fall_acceleration']
+	momentum_x = state['momentum_x']
+	momentum_y = state['momentum_y']
 	relative_x = state['relative_x']
 	relative_y = state['relative_y']
 	animation_x = state['animation_x']
