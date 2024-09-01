@@ -1,4 +1,4 @@
-extends Node
+extends Control
 
 onready var status_label = $StatusLabel 
 

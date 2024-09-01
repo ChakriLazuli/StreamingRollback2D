@@ -2,13 +2,6 @@
 extends TileMap
 class_name DualGridTileMap
 
-enum TileType {NONE = 0, GROUND = 1, WATER = 2}
-const MOMENTUM_BY_TILE_TYPE: Dictionary = {
-	TileType.NONE: Vector2(0,0), 
-	TileType.GROUND: Vector2(0,0), 
-	TileType.WATER: Vector2(0,-10)
-}
-
 const NEIGHBOURS = [Vector2(0,0), Vector2(1,0), Vector2(0,1), Vector2(1,1)]
 
 export var none_placeholder_atlas_coord: Vector2
@@ -32,8 +25,8 @@ func _ready():
 func _set_display_tile(coords: Vector2):
 	for i in 4:
 		var newPos: Vector2 = coords + NEIGHBOURS[i]
-		_ground_tile_map.set_cellv(newPos, 0, false, false, false, _calculate_display_tile(newPos, TileType.GROUND))
-		_water_tile_map.set_cellv(newPos, 0, false, false, false, _calculate_display_tile(newPos, TileType.WATER))
+		_ground_tile_map.set_cellv(newPos, 0, false, false, false, _calculate_display_tile(newPos, TileData.Type.GROUND))
+		_water_tile_map.set_cellv(newPos, 0, false, false, false, _calculate_display_tile(newPos, TileData.Type.WATER))
 
 func _calculate_display_tile(coords: Vector2, tile_type: int) -> Vector2:
 	var botRightType: int = _get_world_tile(coords - NEIGHBOURS[0])
@@ -51,10 +44,10 @@ func _get_world_tile(coords: Vector2) -> int:
 	var atlas_coords: Vector2 = get_cell_autotile_coord(coords.x, coords.y)
 	match atlas_coords:
 		ground_placeholder_atlas_coord:
-			return TileType.GROUND
+			return TileData.Type.GROUND
 		water_placeholder_atlas_coord:
-			return TileType.WATER
-	return TileType.NONE
+			return TileData.Type.WATER
+	return TileData.Type.NONE
 
 func set_tile(coords: Vector2, atlas_coords: Vector2):
 	set_cellv(coords, 0, false, false, false, atlas_coords)
@@ -67,16 +60,13 @@ func get_tile_type_at(global_pos: Vector2) -> int:
 	var tile = get_cell_autotile_coord(tile_coords.x, tile_coords.y)
 	match tile:
 		ground_placeholder_atlas_coord:
-			return TileType.GROUND
+			return TileData.Type.GROUND
 		water_placeholder_atlas_coord:
-			return TileType.WATER
-	return TileType.NONE
-
-func get_momentum_for_tile_type(tile_type: int) -> Vector2:
-	return MOMENTUM_BY_TILE_TYPE[tile_type]
+			return TileData.Type.WATER
+	return TileData.Type.NONE
 
 func get_drag_for_tile_type(tile_type: int) -> int:
-	if TileType.GROUND == tile_type || TileType.NONE == tile_type:
+	if TileData.Type.GROUND == tile_type || TileData.Type.NONE == tile_type:
 		return 0
 	return 1
 

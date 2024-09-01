@@ -1,18 +1,23 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://assets/sprites/placeholders/player.png" type="Texture" id=1]
 [ext_resource path="res://scripts/agents/Player.gd" type="Script" id=2]
 [ext_resource path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" type="Script" id=3]
-
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 16, 24 )
+[ext_resource path="res://scripts/agents/components/MomentumHandler.gd" type="Script" id=4]
+[ext_resource path="res://scripts/agents/components/FallState.gd" type="Script" id=5]
+[ext_resource path="res://scripts/agents/components/TerrainAttachHandler.gd" type="Script" id=6]
+[ext_resource path="res://scripts/agents/components/OldPlayerState.gd" type="Script" id=7]
+[ext_resource path="res://scripts/agents/components/MovementParamsHandler.gd" type="Script" id=8]
+[ext_resource path="res://scripts/agents/components/GroundedState.gd" type="Script" id=9]
+[ext_resource path="res://scripts/agents/components/JumpState.gd" type="Script" id=10]
+[ext_resource path="res://scripts/agents/components/DashState.gd" type="Script" id=11]
 
 [sub_resource type="Animation" id=4]
 resource_name = "DashCurveGround"
 length = 0.13335
 step = 0.0166667
 tracks/0/type = "bezier"
-tracks/0/path = NodePath(".:animation_x")
+tracks/0/path = NodePath(".:animation:x")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -37,7 +42,7 @@ resource_name = "JumpCurve"
 length = 0.6
 step = 0.0166667
 tracks/0/type = "bezier"
-tracks/0/path = NodePath(".:animation_y")
+tracks/0/path = NodePath(".:animation:y")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -59,9 +64,56 @@ tracks/1/keys = {
 "values": [ false, true ]
 }
 
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 16, 24 )
+
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 2
 script = ExtResource( 2 )
+default_state_path = NodePath("FallState")
+gravity_on = false
+
+[node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/DashCurveGround = SubResource( 4 )
+anims/JumpCurve = SubResource( 2 )
+script = ExtResource( 3 )
+auto_reset = false
+
+[node name="ActionAnimationPlayer" type="AnimationPlayer" parent="."]
+script = ExtResource( 3 )
+
+[node name="FallState" type="Node" parent="."]
+script = ExtResource( 5 )
+grounded_path = NodePath("../GroundedState")
+
+[node name="GroundedState" type="Node" parent="."]
+script = ExtResource( 9 )
+jump_path = NodePath("../JumpState")
+fall_path = NodePath("../FallState")
+dash_path = NodePath("../DashState")
+
+[node name="JumpState" type="Node" parent="."]
+script = ExtResource( 10 )
+grounded_path = NodePath("../GroundedState")
+fall_path = NodePath("../FallState")
+
+[node name="DashState" type="Node" parent="."]
+script = ExtResource( 11 )
+jump_path = NodePath("../JumpState")
+fall_path = NodePath("../FallState")
+grounded_path = NodePath("../GroundedState")
+
+[node name="OldPlayerState" type="Node" parent="."]
+script = ExtResource( 7 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="MovementParamsHandler" type="Node" parent="."]
+script = ExtResource( 8 )
 fall_max_air = 16
 fall_acceleration_air = 3
 drift_max_air = 12
@@ -73,11 +125,11 @@ drift_acceleration_water = 2
 drift_max_ground = 16
 drift_acceleration_ground = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 3 )
+[node name="MomentumHandler" type="Node" parent="."]
+script = ExtResource( 4 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 1 )
+[node name="TerrainAttachHandler" type="Node" parent="."]
+script = ExtResource( 6 )
 
 [node name="CheckDown" type="RayCast2D" parent="."]
 position = Vector2( 12, 32 )
@@ -98,12 +150,3 @@ collision_mask = 2
 position = Vector2( 12, -32 )
 cast_to = Vector2( -24, 0 )
 collision_mask = 2
-
-[node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/DashCurveGround = SubResource( 4 )
-anims/JumpCurve = SubResource( 2 )
-script = ExtResource( 3 )
-auto_reset = false
-
-[node name="ActionAnimationPlayer" type="AnimationPlayer" parent="."]
-script = ExtResource( 3 )

@@ -9,10 +9,50 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "Agent",
+"language": "GDScript",
+"path": "res://scripts/agents/Agent.gd"
+}, {
+"base": "Node",
+"class": "AgentState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/AgentState.gd"
+}, {
+"base": "AgentState",
+"class": "DashState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/DashState.gd"
+}, {
 "base": "TileMap",
 "class": "DualGridTileMap",
 "language": "GDScript",
 "path": "res://scripts/terrain/DualGridTileMap.gd"
+}, {
+"base": "AgentState",
+"class": "FallState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/FallState.gd"
+}, {
+"base": "AgentState",
+"class": "GroundedState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/GroundedState.gd"
+}, {
+"base": "AgentState",
+"class": "JumpState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/JumpState.gd"
+}, {
+"base": "Node",
+"class": "MomentumHandler",
+"language": "GDScript",
+"path": "res://scripts/agents/components/MomentumHandler.gd"
+}, {
+"base": "Node",
+"class": "MovementParamsHandler",
+"language": "GDScript",
+"path": "res://scripts/agents/components/MovementParamsHandler.gd"
 }, {
 "base": "AnimationPlayer",
 "class": "NetworkAnimationPlayer",
@@ -28,12 +68,26 @@ _global_script_classes=[ {
 "class": "NetworkTimer",
 "language": "GDScript",
 "path": "res://addons/godot-rollback-netcode/NetworkTimer.gd"
+}, {
+"base": "Node",
+"class": "TerrainAttachHandler",
+"language": "GDScript",
+"path": "res://scripts/agents/components/TerrainAttachHandler.gd"
 } ]
 _global_script_class_icons={
+"Agent": "",
+"AgentState": "",
+"DashState": "",
 "DualGridTileMap": "",
+"FallState": "",
+"GroundedState": "",
+"JumpState": "",
+"MomentumHandler": "",
+"MovementParamsHandler": "",
 "NetworkAnimationPlayer": "",
 "NetworkRandomNumberGenerator": "",
-"NetworkTimer": ""
+"NetworkTimer": "",
+"TerrainAttachHandler": ""
 }
 
 [application]
@@ -51,6 +105,10 @@ NetworkLogManager="*res://scripts/network/NetworkLogManager.gd"
 NetworkRngProvider="*res://scripts/network/NetworkRNGProvider.gd"
 NetworkPeerManager="*res://scripts/network/NetworkPeerManager.gd"
 NetworkMasterManager="*res://scripts/network/NetworkMasterManager.gd"
+TileData="*res://scripts/terrain/TileData.gd"
+GlobalGameState="*res://scripts/game_state/GlobalGameState.gd"
+Enums="*res://scripts/Enums.gd"
+Movement="*res://scripts/agents/components/Movement.gd"
 
 [editor_plugins]
 
@@ -147,8 +205,8 @@ project/assembly_name="StreamingRollback2D"
 rollback/max_buffer_size=30
 rollback/spawn_manager/reuse_despawned_nodes=true
 rollback/sound_manager/default_sound_bus="Sound"
-rollback/debug/rollback_ticks=5
-rollback/debug/random_rollback_ticks=20
+rollback/debug/rollback_ticks=2
+rollback/debug/random_rollback_ticks=2
 
 [physics]
 
