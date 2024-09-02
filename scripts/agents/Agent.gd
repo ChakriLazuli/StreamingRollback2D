@@ -17,6 +17,14 @@ const SPEED_DIVIDER: int = 4
 const FPS_MULTIPLIER: int = Engine.iterations_per_second
 const DISPLACEMENT_MULTIPLIER: int = FPS_MULTIPLIER / SPEED_DIVIDER
 
+var _int_position: Vector2 setget _set_int_position, _get_int_position
+
+func _set_int_position(pos: Vector2):
+	var result: Vector2 = pos * SPEED_DIVIDER
+	_int_position = result.round()
+func _get_int_position():
+	return _int_position / SPEED_DIVIDER
+
 export(NodePath) var dual_grid_tile_map_path
 onready var tile_map: DualGridTileMap = get_node(dual_grid_tile_map_path)
 
@@ -62,9 +70,11 @@ var attach_grace_period: int
 
 func _ready():
 	add_to_group('network_sync')
+	_set_int_position(position)
 	_set_state(default_state)
 
 func _network_process(input: Dictionary):
+	position = _get_int_position()
 	current_input = input
 	_update_tile_type()
 	MovementParamsHandler.update_params(self)
@@ -73,9 +83,10 @@ func _network_process(input: Dictionary):
 	current_state.update(self)
 	MomentumHandler.update_momentum(self)
 	_apply_displacement()
+	_set_int_position(position)
 
 func _update_tile_type():
-	current_tile_type = tile_map.get_tile_type_at(global_position)
+	current_tile_type = tile_map.get_tile_type_at_position(global_position)
 
 func _process_animation_step():
 	animation_delta_new = animation - animation_prev
@@ -90,7 +101,6 @@ func _apply_displacement():
 	if attached == Enums.AttachSide.UP || attached == Enums.AttachSide.DOWN:
 		displacement.y = 0
 	move_and_slide(displacement * DISPLACEMENT_MULTIPLIER)
-	position = position.round()
 	current_velocity = current_velocity.round()
 	current_momentum = current_momentum.round()
 
@@ -111,7 +121,7 @@ func reset_animation_y():
 
 func _save_state() -> Dictionary:
 	return {
-		position = position,
+		_int_position = _int_position,
 		gravity_on = gravity_on,
 		actionable = actionable,
 		drift_max = drift_max,
@@ -130,7 +140,7 @@ func _save_state() -> Dictionary:
 	}
 
 func _load_state(state: Dictionary):
-	position = state['position']
+	_int_position = state['_int_position']
 	gravity_on = state['gravity_on']
 	actionable = state['actionable']
 	drift_max = state['drift_max']
