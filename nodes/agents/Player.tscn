@@ -51,18 +51,6 @@ tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0, -9.29996, -400, -0.3, 1.00093, 0.0694009, 0.29953, -380, -0.0139325, -2.99262, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.5, 0.6 )
 }
-tracks/1/type = "value"
-tracks/1/path = NodePath(".:gravity_on")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 16, 24 )
@@ -71,7 +59,7 @@ extents = Vector2( 16, 24 )
 collision_mask = 2
 script = ExtResource( 2 )
 default_state_path = NodePath("FallState")
-gravity_on = false
+drift_max = 0.0
 
 [node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/DashCurveGround = SubResource( 4 )

@@ -49,8 +49,6 @@ var current_velocity: Vector2
 var current_momentum: Vector2
 
 #Animation Physics
-export var actionable: bool = true
-export var gravity_on: bool = true
 export var drift_max: int = 0
 export var drift_acceleration: int = 0
 export var fall_max: int = 0
@@ -77,12 +75,13 @@ func _network_process(input: Dictionary):
 	position = _get_int_position()
 	current_input = input
 	_update_tile_type()
-	MovementParamsHandler.update_params(self)
 	TerrainAttachHandler.update_attachment(self)
 	_process_animation_step()
 	current_state.update(self)
 	MomentumHandler.update_momentum(self)
 	_apply_displacement()
+	_update_tile_type()
+	MovementParamsHandler.update_params(self)
 	_set_int_position(position)
 
 func _update_tile_type():
@@ -122,8 +121,6 @@ func reset_animation_y():
 func _save_state() -> Dictionary:
 	return {
 		_int_position = _int_position,
-		gravity_on = gravity_on,
-		actionable = actionable,
 		drift_max = drift_max,
 		drift_acceleration = drift_acceleration,
 		fall_max = fall_max,
@@ -141,8 +138,6 @@ func _save_state() -> Dictionary:
 
 func _load_state(state: Dictionary):
 	_int_position = state['_int_position']
-	gravity_on = state['gravity_on']
-	actionable = state['actionable']
 	drift_max = state['drift_max']
 	drift_acceleration = state['drift_acceleration']
 	fall_max = state['fall_max']
