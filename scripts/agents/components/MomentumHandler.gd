@@ -16,6 +16,7 @@ func update_momentum(agent: Agent):
 	_agent = agent
 	_update_tile_data()
 	_update_momentum_drag()
+	_update_momentum_velocity()
 	_update_momentum_attachment()
 	#crouching/standing still?
 
