@@ -15,6 +15,7 @@ onready var _direction_tile_map: TileMap = get_node(direction_tile_map_path)
 #generalize for arbitrary number of tilesets later
 
 func _ready():
+	TerrainRepository.tile_map = self
 	visible = false
 	_ground_tile_map.visible = true
 	_water_tile_map.visible = true

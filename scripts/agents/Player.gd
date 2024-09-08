@@ -1,6 +1,11 @@
 extends Agent
+class_name Player
 
 var _input_vector: Vector2
+
+func _ready():
+	._ready()
+	PlayerRepository.player = self
 
 func _get_local_input() -> Dictionary:
 	var input := {}

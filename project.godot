@@ -20,6 +20,21 @@ _global_script_classes=[ {
 "path": "res://scripts/agents/components/AgentState.gd"
 }, {
 "base": "AgentState",
+"class": "AirDashState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/AirDashState.gd"
+}, {
+"base": "Node",
+"class": "AsepriteImportData",
+"language": "GDScript",
+"path": "res://addons/aseprite_importer/classes/AsepriteImportData.gd"
+}, {
+"base": "Node",
+"class": "AsepriteImporter",
+"language": "GDScript",
+"path": "res://addons/aseprite_importer/classes/AsepriteImporter.gd"
+}, {
+"base": "AgentState",
 "class": "DashState",
 "language": "GDScript",
 "path": "res://scripts/agents/components/DashState.gd"
@@ -29,15 +44,25 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/terrain/DualGridTileMap.gd"
 }, {
+"base": "Node",
+"class": "EditorTheme",
+"language": "GDScript",
+"path": "res://addons/aseprite_importer/classes/EditorTheme.gd"
+}, {
 "base": "AgentState",
 "class": "FallState",
 "language": "GDScript",
 "path": "res://scripts/agents/components/FallState.gd"
 }, {
 "base": "AgentState",
-"class": "GroundedState",
+"class": "HurtState",
 "language": "GDScript",
-"path": "res://scripts/agents/components/GroundedState.gd"
+"path": "res://scripts/agents/components/HurtState.gd"
+}, {
+"base": "AgentState",
+"class": "IdleState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/IdleState.gd"
 }, {
 "base": "AgentState",
 "class": "JumpState",
@@ -69,25 +94,66 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/godot-rollback-netcode/NetworkTimer.gd"
 }, {
+"base": "Agent",
+"class": "Player",
+"language": "GDScript",
+"path": "res://scripts/agents/Player.gd"
+}, {
+"base": "AgentState",
+"class": "RunState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/RunState.gd"
+}, {
 "base": "Node",
 "class": "TerrainAttachHandler",
 "language": "GDScript",
 "path": "res://scripts/agents/components/TerrainAttachHandler.gd"
+}, {
+"base": "AgentState",
+"class": "WalkState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/WalkState.gd"
+}, {
+"base": "AgentState",
+"class": "WallClingState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/WallClingState.gd"
+}, {
+"base": "AgentState",
+"class": "WallDashState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/WallDashState.gd"
+}, {
+"base": "AgentState",
+"class": "WallJumpState",
+"language": "GDScript",
+"path": "res://scripts/agents/components/WallJumpState.gd"
 } ]
 _global_script_class_icons={
 "Agent": "",
 "AgentState": "",
+"AirDashState": "",
+"AsepriteImportData": "",
+"AsepriteImporter": "",
 "DashState": "",
 "DualGridTileMap": "",
+"EditorTheme": "",
 "FallState": "",
-"GroundedState": "",
+"HurtState": "",
+"IdleState": "",
 "JumpState": "",
 "MomentumHandler": "",
 "MovementParamsHandler": "",
 "NetworkAnimationPlayer": "",
 "NetworkRandomNumberGenerator": "",
 "NetworkTimer": "",
-"TerrainAttachHandler": ""
+"Player": "",
+"RunState": "",
+"TerrainAttachHandler": "",
+"WalkState": "",
+"WallClingState": "",
+"WallDashState": "",
+"WallJumpState": ""
 }
 
 [application]
@@ -95,6 +161,10 @@ _global_script_class_icons={
 config/name="StreamingRollback2D"
 run/main_scene="res://scenes/sandbox/test_level.tscn"
 config/icon="res://icon.png"
+
+[aseprite_animation_importer]
+
+aseprite_executable_path=""
 
 [autoload]
 
@@ -109,10 +179,16 @@ TileData="*res://scripts/terrain/TileData.gd"
 GlobalGameState="*res://scripts/game_state/GlobalGameState.gd"
 Enums="*res://scripts/Enums.gd"
 Movement="*res://scripts/agents/components/Movement.gd"
+PlayerRepository="*res://scripts/streaming/PlayerRepository.gd"
+TerrainRepository="*res://scripts/streaming/TerrainRepository.gd"
+
+[display]
+
+window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/godot-rollback-netcode/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/aseprite_importer/plugin.cfg", "res://addons/godot-rollback-netcode/plugin.cfg" )
 
 [gui]
 

@@ -1,19 +1,200 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=30 format=2]
 
-[ext_resource path="res://assets/sprites/placeholders/player.png" type="Texture" id=1]
+[ext_resource path="res://assets/sprites/carp/carp.png" type="Texture" id=1]
 [ext_resource path="res://scripts/agents/Player.gd" type="Script" id=2]
 [ext_resource path="res://addons/godot-rollback-netcode/NetworkAnimationPlayer.gd" type="Script" id=3]
 [ext_resource path="res://scripts/agents/components/MomentumHandler.gd" type="Script" id=4]
 [ext_resource path="res://scripts/agents/components/FallState.gd" type="Script" id=5]
 [ext_resource path="res://scripts/agents/components/TerrainAttachHandler.gd" type="Script" id=6]
-[ext_resource path="res://scripts/agents/components/OldPlayerState.gd" type="Script" id=7]
+[ext_resource path="res://scripts/agents/components/WallClingState.gd" type="Script" id=7]
 [ext_resource path="res://scripts/agents/components/MovementParamsHandler.gd" type="Script" id=8]
-[ext_resource path="res://scripts/agents/components/GroundedState.gd" type="Script" id=9]
+[ext_resource path="res://scripts/agents/components/WalkState.gd" type="Script" id=9]
 [ext_resource path="res://scripts/agents/components/JumpState.gd" type="Script" id=10]
 [ext_resource path="res://scripts/agents/components/DashState.gd" type="Script" id=11]
+[ext_resource path="res://scripts/agents/components/WallJumpState.gd" type="Script" id=12]
+[ext_resource path="res://scripts/agents/components/IdleState.gd" type="Script" id=13]
+[ext_resource path="res://scripts/agents/components/AirDashState.gd" type="Script" id=14]
+[ext_resource path="res://scripts/agents/components/RunState.gd" type="Script" id=15]
+[ext_resource path="res://scripts/agents/components/WallDashState.gd" type="Script" id=16]
+[ext_resource path="res://scripts/agents/components/HurtState.gd" type="Script" id=17]
+
+[sub_resource type="Animation" id=10]
+resource_name = "AirDashDown"
+length = 0.33335
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "AirDashDownSide"
+length = 0.33335
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "AirDashSide"
+length = 0.33335
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "AirDashUp"
+length = 0.33335
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "AirDashUpSide"
+length = 0.33335
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray(  ),
+"times": PoolRealArray(  )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
+}
 
 [sub_resource type="Animation" id=4]
-resource_name = "DashCurveGround"
+resource_name = "Dash"
 length = 0.13335
 step = 0.0166667
 tracks/0/type = "bezier"
@@ -38,7 +219,7 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=2]
-resource_name = "JumpCurve"
+resource_name = "Jump"
 length = 0.6
 step = 0.0166667
 tracks/0/type = "bezier"
@@ -51,54 +232,283 @@ tracks/0/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0, -9.29996, -400, -0.3, 1.00093, 0.0694009, 0.29953, -380, -0.0139325, -2.99262, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.5, 0.6 )
 }
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:drift_acceleration")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 16, -0.25, 0, 0.25, 0, 2, 0, 9.06241, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.0666668, 0.6 )
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "WallDash"
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.3, 134.076, 200, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 1 )
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "WallJump"
+length = 0.6
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.216667, 173.669, 333, -0.25, -39.415, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0, -9.29996, -400, -0.3, 1.00093, 0.0694009, 0.29953, -380, -0.0139325, -2.99262, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 0.6 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "WallJumpDown"
+length = 0.6
+step = 0.0166667
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:animation:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.216667, 173.669, 333, -0.25, -39.415, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:animation:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.233333, -200.805, 119.492, -0.0833334, -115.011, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drift_acceleration")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.48
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:region_rect")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Rect2( 0, 0, 48, 48 ), Rect2( 48, 0, 48, 48 ), Rect2( 96, 0, 48, 48 ), Rect2( 144, 0, 48, 48 ), Rect2( 0, 48, 48, 48 ), Rect2( 48, 48, 48, 48 ), Rect2( 96, 48, 48, 48 ), Rect2( 144, 48, 48, 48 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:offset")
+tracks/1/interp = 0
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.06, 0.12, 0.18, 0.24, 0.3, 0.36, 0.42 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ), Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 16, 24 )
+extents = Vector2( 16, 16 )
 
 [node name="Player" type="KinematicBody2D"]
 collision_mask = 2
 script = ExtResource( 2 )
 default_state_path = NodePath("FallState")
+hurt_state_path = NodePath("HurtState")
 drift_max = 0.0
+drift_acceleration = 0.0
 
 [node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
-anims/DashCurveGround = SubResource( 4 )
-anims/JumpCurve = SubResource( 2 )
+anims/AirDashDown = SubResource( 10 )
+anims/AirDashDownSide = SubResource( 11 )
+anims/AirDashSide = SubResource( 12 )
+anims/AirDashUp = SubResource( 9 )
+anims/AirDashUpSide = SubResource( 13 )
+anims/Dash = SubResource( 4 )
+anims/Jump = SubResource( 2 )
+anims/WallDash = SubResource( 8 )
+anims/WallJump = SubResource( 5 )
+anims/WallJumpDown = SubResource( 6 )
 script = ExtResource( 3 )
 auto_reset = false
 
 [node name="ActionAnimationPlayer" type="AnimationPlayer" parent="."]
 script = ExtResource( 3 )
 
-[node name="FallState" type="Node" parent="."]
-script = ExtResource( 5 )
-grounded_path = NodePath("../GroundedState")
+[node name="SpriteAnimationPlayer" type="AnimationPlayer" parent="."]
+anims/walk = SubResource( 7 )
+script = ExtResource( 3 )
 
-[node name="GroundedState" type="Node" parent="."]
+[node name="IdleState" type="Node" parent="."]
+script = ExtResource( 13 )
+jump_path = NodePath("../JumpState")
+fall_path = NodePath("../FallState")
+dash_path = NodePath("../DashState")
+walk_path = NodePath("../WalkState")
+drift_acceleration_air = 2
+drift_acceleration_water = 2
+
+[node name="WalkState" type="Node" parent="."]
 script = ExtResource( 9 )
 jump_path = NodePath("../JumpState")
 fall_path = NodePath("../FallState")
 dash_path = NodePath("../DashState")
-
-[node name="JumpState" type="Node" parent="."]
-script = ExtResource( 10 )
-grounded_path = NodePath("../GroundedState")
-fall_path = NodePath("../FallState")
+idle_path = NodePath("../IdleState")
+drift_max_air = 16
+drift_max_retention_air = 32
+drift_acceleration_air = 4
+drift_max_water = 16
+drift_acceleration_water = 4
 
 [node name="DashState" type="Node" parent="."]
 script = ExtResource( 11 )
 jump_path = NodePath("../JumpState")
 fall_path = NodePath("../FallState")
-grounded_path = NodePath("../GroundedState")
+run_path = NodePath("../RunState")
+drift_max_air = 32
+drift_max_retention_air = 48
+drift_max_water = 32
 
-[node name="OldPlayerState" type="Node" parent="."]
+[node name="RunState" type="Node" parent="."]
+script = ExtResource( 15 )
+jump_path = NodePath("../JumpState")
+fall_path = NodePath("../FallState")
+dash_path = NodePath("../DashState")
+grounded_path = NodePath("../WalkState")
+drift_max_air = 32
+drift_max_retention_air = 48
+drift_acceleration_air = 2
+drift_max_water = 32
+drift_acceleration_water = 2
+
+[node name="JumpState" type="Node" parent="."]
+script = ExtResource( 10 )
+wall_cling_path = NodePath("../WallClingState")
+grounded_path = NodePath("../WalkState")
+fall_path = NodePath("../FallState")
+air_dash_path = NodePath("../AirDashState")
+drift_max_air = 16
+drift_max_retention_air = 32
+drift_max_water = 12
+
+[node name="FallState" type="Node" parent="."]
+script = ExtResource( 5 )
+wall_cling_path = NodePath("../WallClingState")
+grounded_path = NodePath("../WalkState")
+air_dash_path = NodePath("../AirDashState")
+fall_max_air = 16
+fall_max_retention_air = 32
+fall_acceleration_air = 3
+drift_max_air = 12
+drift_max_retention_air = 32
+drift_acceleration_air = 1
+fall_max_water = 12
+fall_acceleration_water = 1
+drift_max_water = 8
+drift_acceleration_water = 2
+
+[node name="AirDashState" type="Node" parent="."]
+script = ExtResource( 14 )
+wall_dash_path = NodePath("../WallDashState")
+run_path = NodePath("../RunState")
+fall_path = NodePath("../FallState")
+drift_max_air = 24
+drift_max_water = 24
+
+[node name="WallClingState" type="Node" parent="."]
 script = ExtResource( 7 )
+fall_path = NodePath("../FallState")
+wall_jump_path = NodePath("../WallJumpState")
+
+[node name="WallJumpState" type="Node" parent="."]
+script = ExtResource( 12 )
+wall_cling_path = NodePath("../WallClingState")
+grounded_path = NodePath("../WalkState")
+fall_path = NodePath("../FallState")
+air_dash_path = NodePath("../AirDashState")
+drift_max_air = 12
+drift_max_water = 12
+
+[node name="WallDashState" type="Node" parent="."]
+script = ExtResource( 16 )
+wall_cling_path = NodePath("../WallClingState")
+grounded_path = NodePath("../IdleState")
+fall_path = NodePath("../FallState")
+fall_max_air = 32
+fall_max_water = 32
+
+[node name="HurtState" type="Node" parent="."]
+script = ExtResource( 17 )
+fall_path = NodePath("../FallState")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, -8 )
 texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 48, 48 )
+__meta__ = {
+"_aseprite_wizard_config_": {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "res://assets/sprites/carp",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "SpriteAnimationPlayer",
+"slice": "",
+"source": "res://assets/sprites/carp/carp_export.ase"
+}
+}
 
 [node name="MovementParamsHandler" type="Node" parent="."]
 script = ExtResource( 8 )
@@ -120,21 +530,21 @@ script = ExtResource( 4 )
 script = ExtResource( 6 )
 
 [node name="CheckDown" type="RayCast2D" parent="."]
-position = Vector2( 12, 32 )
+position = Vector2( 12, 24 )
 cast_to = Vector2( -24, 0 )
 collision_mask = 2
 
 [node name="CheckRight" type="RayCast2D" parent="."]
-position = Vector2( 24, 20 )
-cast_to = Vector2( 0, -40 )
+position = Vector2( 24, 12 )
+cast_to = Vector2( 0, -24 )
 collision_mask = 2
 
 [node name="CheckLeft" type="RayCast2D" parent="."]
-position = Vector2( -24, 20 )
-cast_to = Vector2( 0, -40 )
+position = Vector2( -24, 12 )
+cast_to = Vector2( 0, -24 )
 collision_mask = 2
 
 [node name="CheckUp" type="RayCast2D" parent="."]
-position = Vector2( 12, -32 )
+position = Vector2( 12, -24 )
 cast_to = Vector2( -24, 0 )
 collision_mask = 2

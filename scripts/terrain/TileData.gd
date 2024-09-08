@@ -4,14 +4,14 @@ enum Type {NONE, AIRN, AIRNE, AIRE, AIRSE, AIRS, AIRSW, AIRW, AIRNW,
 	AIR, AIRN2, AIRNE2, AIRE2, AIRSE2, AIRS2, AIRSW2, AIRW2, AIRNW2,
 	WATER, WATERN, WATERNE, WATERE, WATERSE, WATERS, WATERSW, WATERW, WATERNW, 
 	WATER2, WATERN2, WATERNE2, WATERE2, WATERSE2, WATERS2, WATERSW2, WATERW2, WATERNW2,
-	GROUND, GROUND2, GROUND3, GROUND4, GROUND5, GROUND6, GROUND7, GROUND8, GROUND9}
+	GROUND, GROUNDSLIP, GROUNDOTHER, WOOD, WOODSLIP, WOODOTHER, OTHER, OTHERSLIP, OTHEROTHER}
 
 enum SimpleType {AIR, WATER, GROUND}
 
 enum DirectionType {NONE, N, NE, E, SE, S, SW, W, NW}
-const DIRECTIONS: Dictionary = {0: Vector2(0,0), 1: Vector2(0,-3), 2: Vector2(-2,2), 
-	3: Vector2(0,-3), 4: Vector2(2,-2), 5: Vector2(3,0), 
-	6: Vector2(2,2), 7: Vector2(0,3), 8: Vector2(-2,2)}
+const DIRECTIONS: Dictionary = {0: Vector2(0,0), 1: Vector2(0,-3), 2: Vector2(2,-2), 
+	3: Vector2(3,0), 4: Vector2(2,2), 5: Vector2(0,3),
+	6: Vector2(-2,2), 7: Vector2(-3,0), 8: Vector2(-2,-2)}
 	
 enum SpeedType {NONE, SLOW, FAST}
 const SPEEDS: Dictionary = {SpeedType.NONE: 0, SpeedType.SLOW: 1, SpeedType.FAST: 3}
@@ -63,16 +63,31 @@ func is_tile_water(tile_type: int) -> bool:
 			return true
 	return false
 
+func get_surface_drag(tile_type: int, immersion_tile_type: int) -> int:
+	if is_tile_water(immersion_tile_type):
+		if !is_tile_slip(tile_type):
+			return 3
+	return 0
+
+func is_tile_slip(tile_type: int) -> bool:
+	match tile_type:
+		Type.GROUNDSLIP:
+			return true
+		Type.WOODSLIP:
+			return true
+		Type.OTHERSLIP:
+			return true
+	return false
+
 func get_direction_atlas_coordsv(atlas_coords: Vector2) -> Vector2:
 	return Vector2(atlas_coords.x, int(atlas_coords.y) % 2)
 
 func get_direction_atlas_coords(tile_type: int) -> Vector2:
 	var direction_type = get_direction_tile_type(tile_type)
-	var x = direction_type % 9
-	var y
-	if direction_type < 9:
-		y = 0
-	else: 
+	var speed_type = get_speed_tile_type(tile_type)
+	var x = direction_type
+	var y = 0
+	if speed_type == SpeedType.FAST:
 		y = 1
 	return Vector2(x, y)
 

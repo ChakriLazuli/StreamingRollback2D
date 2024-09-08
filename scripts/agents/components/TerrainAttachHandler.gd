@@ -7,17 +7,31 @@ var _agent: Agent
 
 func update_attachment(agent: Agent):
 	_agent = agent
-	if (_agent.attach_grace_period > 0):
-		_agent.attach_grace_period = _agent.attach_grace_period - 1
-		return
-	if _agent.current_input['jump']:
-		return
 	#_snap_up()
 	_snap_right()
 	_snap_left()
 	_snap_down()
+	_update_tile_type()
+
+func _update_tile_type():
+	match _agent.attached:
+		Enums.AttachSide.NONE:
+			_agent.current_attached_tile_type = TileData.Type.AIR
+		Enums.AttachSide.LEFT:
+			_agent.current_attached_tile_type = TerrainRepository.tile_map.get_tile_type_at_position(_agent.check_left.global_position)
+		Enums.AttachSide.RIGHT:
+			_agent.current_attached_tile_type = TerrainRepository.tile_map.get_tile_type_at_position(_agent.check_right.global_position)
+		Enums.AttachSide.UP:
+			_agent.current_attached_tile_type = TerrainRepository.tile_map.get_tile_type_at_position(_agent.check_up.global_position)
+		Enums.AttachSide.DOWN:
+			_agent.current_attached_tile_type = TerrainRepository.tile_map.get_tile_type_at_position(_agent.check_down.global_position)
 
 func _snap_down():
+	if (_agent.attach_grace_period_down > 0):
+		_agent.attach_grace_period_down = _agent.attach_grace_period_down - 1
+		return
+	if _agent.current_input['jump']:
+		return
 	if _agent.current_momentum.y <= -dislodge_momentum:
 		if _agent.attached == Enums.AttachSide.DOWN:
 			_agent.attached = Enums.AttachSide.NONE
@@ -31,6 +45,13 @@ func _snap_down():
 		_agent.attached = Enums.AttachSide.NONE
 
 func _snap_up():
+	if (_agent.attach_grace_period_up > 0):
+		_agent.attach_grace_period_up = _agent.attach_grace_period_up - 1
+		return
+	if _agent.current_input['jump']:
+		return
+	if !GlobalGameState.is_unlocked('wallcling'):
+		return
 	if _agent.current_momentum.y >= dislodge_momentum:
 		if _agent.attached == Enums.AttachSide.UP:
 			_agent.attached = Enums.AttachSide.NONE
@@ -46,6 +67,13 @@ func _snap_up():
 		_agent.attached = Enums.AttachSide.NONE
 
 func _snap_right():
+	if (_agent.attach_grace_period_right > 0):
+		_agent.attach_grace_period_right = _agent.attach_grace_period_right - 1
+		return
+	if _agent.current_input['jump']:
+		return
+	if !GlobalGameState.is_unlocked('wallcling'):
+		return
 	if _agent.current_momentum.x >= dislodge_momentum:
 		if _agent.attached == Enums.AttachSide.RIGHT:
 			_agent.attached = Enums.AttachSide.NONE
@@ -61,7 +89,14 @@ func _snap_right():
 		_agent.attached = Enums.AttachSide.NONE
 
 func _snap_left():
-	if _agent.current_momentum.x <= dislodge_momentum:
+	if (_agent.attach_grace_period_left > 0):
+		_agent.attach_grace_period_left = _agent.attach_grace_period_left - 1
+		return
+	if _agent.current_input['jump']:
+		return
+	if !GlobalGameState.is_unlocked('wallcling'):
+		return
+	if _agent.current_momentum.x <= -dislodge_momentum:
 		if _agent.attached == Enums.AttachSide.LEFT:
 			_agent.attached = Enums.AttachSide.NONE
 		return
