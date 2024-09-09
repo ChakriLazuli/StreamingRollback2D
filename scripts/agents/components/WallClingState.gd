@@ -14,7 +14,7 @@ func update(agent: Agent):
 	if agent.attached != Enums.AttachSide.RIGHT && agent.attached != Enums.AttachSide.LEFT:
 		if change_state(agent, _fall):
 			return
-	if agent.current_input['jump']:
+	if agent.InputBufferer.is_within_buffer(agent, 'jump', false):
 		if change_state(agent, _wall_jump):
 			return
 	

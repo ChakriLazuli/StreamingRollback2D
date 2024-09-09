@@ -12,6 +12,8 @@ func update_attachment(agent: Agent):
 	_snap_left()
 	_snap_down()
 	_update_tile_type()
+	if agent.attached == Enums.AttachSide.DOWN:
+		agent.last_grounded_position = agent.position
 
 func _update_tile_type():
 	match _agent.attached:
@@ -30,8 +32,8 @@ func _snap_down():
 	if (_agent.attach_grace_period_down > 0):
 		_agent.attach_grace_period_down = _agent.attach_grace_period_down - 1
 		return
-	if _agent.current_input['jump']:
-		return
+	#if _agent.current_input['jump']:
+	#	return
 	if _agent.current_momentum.y <= -dislodge_momentum:
 		if _agent.attached == Enums.AttachSide.DOWN:
 			_agent.attached = Enums.AttachSide.NONE

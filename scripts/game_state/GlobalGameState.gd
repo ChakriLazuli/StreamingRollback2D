@@ -4,13 +4,13 @@ var spawnPoint = 'default'
 var last_safe_location: Vector2 = Vector2.ZERO
 
 var unlocks: Dictionary = {
-	'dragon': true,
-	'bubble': true, 
-	'airdash': true, 
+	'dragon': false,
+	'landbound': false, 
+	'airdash': false, 
 	'waterdash': true, 
-	'infinidash': true, 
+	'infinidash': false, 
 	'dragignore': false, 
-	'wallcling': true
+	'wallcling': false
 }
 
 func _ready():
@@ -22,7 +22,7 @@ func is_unlocked(var ability: String) -> bool:
 func _save_state() -> Dictionary:
 	return {
 		dragon = unlocks['dragon'],
-		bubble = unlocks['bubble'],
+		landbound = unlocks['landbound'],
 		airdash = unlocks['airdash'],
 		waterdash = unlocks['waterdash'],
 		infinidash = unlocks['infinidash'],
@@ -32,7 +32,7 @@ func _save_state() -> Dictionary:
 
 func _load_state(state: Dictionary):
 	unlocks['dragon'] = state['dragon']
-	unlocks['bubble'] = state['bubble']
+	unlocks['landbound'] = state['landbound']
 	unlocks['airdash'] = state['airdash']
 	unlocks['waterdash'] = state['waterdash']
 	unlocks['infinidash'] = state['infinidash']

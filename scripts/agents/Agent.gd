@@ -6,10 +6,12 @@ onready var ActionAnimationPlayer = $ActionAnimationPlayer
 onready var SpriteAnimationPlayer = $SpriteAnimationPlayer
 
 onready var SpriteNode = $Sprite
+onready var BubbleNode = $SpriteBubble
 
 onready var MomentumHandler = $MomentumHandler
 onready var TerrainAttachHandler = $TerrainAttachHandler
 onready var MovementParamsHandler = $MovementParamsHandler
+onready var InputBufferer = $InputBufferer
 
 onready var check_down: RayCast2D = $CheckDown
 onready var check_up: RayCast2D = $CheckUp
@@ -80,6 +82,13 @@ var attach_grace_period_up: int
 
 var frames_in_state: int
 var state_timer: int
+var last_grounded_position: Vector2
+var air_dashes_left: int
+
+var frames_since_jump_press: int = 60
+var frames_since_jump_release: int = 61
+var frames_since_dash_press: int = 60
+var frames_since_dash_release: int = 61
 
 func _ready():
 	add_to_group('network_sync')
@@ -91,6 +100,7 @@ func _ready():
 func _network_process(input: Dictionary):
 	position = _get_int_position()
 	current_input = input
+	InputBufferer.update_inputs(self)
 	frames_in_state += 1
 	TerrainAttachHandler.update_attachment(self)
 	_update_tile_type()
@@ -175,6 +185,12 @@ func _save_state() -> Dictionary:
 		_previous_state_index = _previous_state_index,
 		frames_in_state = frames_in_state,
 		state_timer = state_timer,
+		last_grounded_position = last_grounded_position,
+		air_dashes_left = air_dashes_left,
+		frames_since_dash_press = frames_since_dash_press,
+		frames_since_dash_release = frames_since_dash_release,
+		frames_since_jump_press = frames_since_jump_press,
+		frames_since_jump_release = frames_since_jump_release,
 	}
 
 func _load_state(state: Dictionary):
@@ -201,3 +217,9 @@ func _load_state(state: Dictionary):
 	_previous_state_index = state['_previous_state_index']
 	frames_in_state = state['frames_in_state']
 	state_timer = state['state_timer']
+	last_grounded_position = state['last_grounded_position']
+	air_dashes_left = state['air_dashes_left']
+	frames_since_dash_press = state['frames_since_dash_press']
+	frames_since_dash_release = state['frames_since_dash_release']
+	frames_since_jump_press = state['frames_since_jump_press']
+	frames_since_jump_release = state['frames_since_jump_release']

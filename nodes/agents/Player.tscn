@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=31 format=2]
 
 [ext_resource path="res://assets/sprites/carp/carp.png" type="Texture" id=1]
 [ext_resource path="res://scripts/agents/Player.gd" type="Script" id=2]
@@ -17,6 +17,7 @@
 [ext_resource path="res://scripts/agents/components/RunState.gd" type="Script" id=15]
 [ext_resource path="res://scripts/agents/components/WallDashState.gd" type="Script" id=16]
 [ext_resource path="res://scripts/agents/components/HurtState.gd" type="Script" id=17]
+[ext_resource path="res://scripts/agents/components/InputBufferer.gd" type="Script" id=18]
 
 [sub_resource type="Animation" id=10]
 resource_name = "AirDashDown"
@@ -39,7 +40,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 300, -0.183333, -439.171, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 tracks/2/type = "bezier"
@@ -49,7 +50,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 
@@ -64,8 +65,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray(  ),
-"times": PoolRealArray(  )
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -78.8405, 160, -0.166667, -267.882, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -74,7 +75,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 340, -0.216667, -170.239, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 tracks/2/type = "bezier"
@@ -84,7 +85,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 
@@ -99,8 +100,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray(  ),
-"times": PoolRealArray(  )
+"points": PoolRealArray( 0, -0.25, 0, 0.05, -85.0323, 400, -0.250001, -262.13, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -109,7 +110,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 0, -0.216667, -215.059, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 tracks/2/type = "bezier"
@@ -119,7 +120,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 
@@ -154,7 +155,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 
@@ -169,8 +170,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray(  ),
-"times": PoolRealArray(  )
+"points": PoolRealArray( 0, -0.25, 0, 0.0833333, -122.183, 160, -0.250001, -122.13, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.333333 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -179,7 +180,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.05, 51.1859, -340, -0.216667, 74.4751, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 tracks/2/type = "bezier"
@@ -189,7 +190,7 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.25, -0.0608742, 1, -0.25, 0, 0.25, 0 ),
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.333333 )
 }
 
@@ -443,6 +444,7 @@ script = ExtResource( 5 )
 wall_cling_path = NodePath("../WallClingState")
 grounded_path = NodePath("../WalkState")
 air_dash_path = NodePath("../AirDashState")
+jump_path = NodePath("../JumpState")
 fall_max_air = 16
 fall_max_retention_air = 32
 fall_acceleration_air = 3
@@ -510,6 +512,8 @@ __meta__ = {
 }
 }
 
+[node name="SpriteBubble" type="Sprite" parent="."]
+
 [node name="MovementParamsHandler" type="Node" parent="."]
 script = ExtResource( 8 )
 fall_max_air = 16
@@ -528,6 +532,9 @@ script = ExtResource( 4 )
 
 [node name="TerrainAttachHandler" type="Node" parent="."]
 script = ExtResource( 6 )
+
+[node name="InputBufferer" type="Node" parent="."]
+script = ExtResource( 18 )
 
 [node name="CheckDown" type="RayCast2D" parent="."]
 position = Vector2( 12, 24 )

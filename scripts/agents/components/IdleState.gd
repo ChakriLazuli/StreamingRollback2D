@@ -23,7 +23,7 @@ func update(agent: Agent):
 	if agent.attached != Enums.AttachSide.DOWN:
 		if change_state(agent, _fall):
 			return
-	if agent.current_input['jump']:
+	if agent.InputBufferer.is_within_buffer(agent, 'jump', false):
 		if change_state(agent, _jump):
 			return
 	if agent.current_input['dash']:
@@ -35,11 +35,11 @@ func update(agent: Agent):
 	else:
 		agent.drift_acceleration = drift_acceleration_air
 		
-	agent.current_velocity.y = 0
 	Movement.apply_drift_x(agent, true)
 
 func initialize(agent: Agent):
 	zero_drift_vars(agent)
+	agent.current_velocity.y = 0
 
 func clear_used_vars(agent: Agent):
 	agent.SpriteAnimationPlayer.stop()
