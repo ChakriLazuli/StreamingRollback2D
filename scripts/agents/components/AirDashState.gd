@@ -41,23 +41,36 @@ func update(agent: Agent):
 	Movement.apply_drift_x(agent, true)
 
 func initialize(agent: Agent):
+	agent.air_dashes_left -= 1
 	agent.attached = Enums.AttachSide.NONE
 	agent.animation_facing = agent.facing_direction
 	if agent.current_input['x'] == 0:
 		if agent.current_input['y'] > 0:
+			if agent.current_momentum.y < 0:
+				agent.current_momentum.y = 0
 			agent.MovementAnimationPlayer.play(animation_down)
 		else:
+			if agent.current_momentum.y > 0:
+				agent.current_momentum.y = 0
 			agent.MovementAnimationPlayer.play(animation_up)
 	else:
+		if agent.current_momentum.x > 0 && agent.current_input['x'] < 0:
+			agent.current_momentum.x = 0
+		if agent.current_momentum.x < 0 && agent.current_input['x'] < 0:
+			agent.current_momentum.x = 0
 		match int(sign(agent.current_input['y'])):
 			0:
 				agent.MovementAnimationPlayer.play(animation_side)
 			1:
+				if agent.current_momentum.y < 0:
+					agent.current_momentum.y = 0
 				agent.MovementAnimationPlayer.play(animation_down_side)
 			-1:
+				if agent.current_momentum.y > 0:
+					agent.current_momentum.y = 0
 				agent.MovementAnimationPlayer.play(animation_up_side)
 	zero_drift_vars(agent)
-	agent.current_velocity.y = 0
+	agent.current_velocity = Vector2.ZERO
 
 func clear_used_vars(agent: Agent):
 	agent.reset_animation_y()
@@ -66,3 +79,7 @@ func clear_used_vars(agent: Agent):
 	agent.attach_grace_period_left = 0
 	agent.attach_grace_period_right = 0
 	agent.animation_facing = Enums.FacingSide.NULL
+	agent.drag_multiplier = 1
+
+func is_available(agent: Agent) -> bool:
+	return agent.has_airdash() || TileData.is_tile_water(agent.current_tile_type)

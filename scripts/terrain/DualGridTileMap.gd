@@ -15,15 +15,20 @@ onready var _direction_tile_map: TileMap = get_node(direction_tile_map_path)
 #generalize for arbitrary number of tilesets later
 
 func _ready():
+	add_to_group('network_sync')
 	TerrainRepository.tile_map = self
 	visible = false
 	_ground_tile_map.visible = true
 	_water_tile_map.visible = true
-	for coords in get_used_cells():
-		_set_display_tile(coords)
-		_direction_tile_map.set_cellv(coords, 0, false, false, false, _calculate_direction_tile(coords))
+	_update_visual_grids()
+
+func _clear_display_tiles():
+	_direction_tile_map.clear()
+	_ground_tile_map.clear()
+	_water_tile_map.clear()
 
 func _set_display_tile(coords: Vector2):
+	_direction_tile_map.set_cellv(coords, 0, false, false, false, _calculate_direction_tile(coords))
 	for i in 4:
 		var newPos: Vector2 = coords + NEIGHBOURS[i]
 		_ground_tile_map.set_cellv(newPos, 0, false, false, false, _calculate_display_tile(newPos, TileData.SimpleType.GROUND))
@@ -54,7 +59,37 @@ func set_tile(coords: Vector2, atlas_coords: Vector2):
 	_set_display_tile(coords)
 
 func get_tile_type_at_position(global_pos: Vector2) -> int:
+	var tile_coords = get_coords_at_position(global_pos)
+	return get_tile_type_at_cell(tile_coords)
+
+func get_coords_at_position(global_pos: Vector2) -> Vector2:
 	var relative_pos = global_pos - global_position
 	var tile_coords_f = relative_pos/cell_size
 	var tile_coords = Vector2(floor(tile_coords_f.x),floor(tile_coords_f.y))
-	return get_tile_type_at_cell(tile_coords)
+	return tile_coords
+
+func _network_process(input: Dictionary):
+	#_update_visual_grids()
+	pass
+
+func _process(delta: float):
+	_update_visual_grids()
+
+func _update_logical_grid():
+	pass
+
+func _update_visual_grids():
+	var player_coords = Vector2.ZERO
+	if PlayerRepository.player != null:
+		player_coords = get_coords_at_position(PlayerRepository.player.global_position)
+	
+	_clear_display_tiles()
+	for coords in get_used_cells():
+		var coords_distance = _get_coords_distance(coords, player_coords)
+		if coords_distance > 20:
+			continue
+		_set_display_tile(coords)
+
+func _get_coords_distance(coords1: Vector2, coords2: Vector2) -> int:
+	var coords_diff = coords1 - coords2
+	return int(max(abs(coords_diff.x), abs(coords_diff.y)))

@@ -37,15 +37,15 @@ func update(agent: Agent):
 	Movement.apply_drift_x(agent, true)
 
 func initialize(agent: Agent):
-	agent.reset_animation_x()
 	agent.current_velocity.x = 0
 	agent.animation_facing = agent.facing_direction
 	agent.MovementAnimationPlayer.play(animation)
 	zero_drift_vars(agent)
-	agent.current_velocity.y = 0
+	agent.current_velocity = Vector2.ZERO
 
 func clear_used_vars(agent: Agent):
 	agent.MovementAnimationPlayer.stop()
+	agent.reset_animation_x()
 	agent.animation_facing = Enums.FacingSide.NULL
 
 func is_grounded():

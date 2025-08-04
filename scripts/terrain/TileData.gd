@@ -14,7 +14,7 @@ const DIRECTIONS: Dictionary = {0: Vector2(0,0), 1: Vector2(0,-3), 2: Vector2(2,
 	6: Vector2(-2,2), 7: Vector2(-3,0), 8: Vector2(-2,-2)}
 	
 enum SpeedType {NONE, SLOW, FAST}
-const SPEEDS: Dictionary = {SpeedType.NONE: 0, SpeedType.SLOW: 1, SpeedType.FAST: 3}
+const SPEEDS: Dictionary = {SpeedType.NONE: 0, SpeedType.SLOW: 2, SpeedType.FAST: 7}
 
 func get_tile_type_from_atlas(atlas_coords: Vector2) -> int:
 	return 9 * int(atlas_coords.y) + int(atlas_coords.x)

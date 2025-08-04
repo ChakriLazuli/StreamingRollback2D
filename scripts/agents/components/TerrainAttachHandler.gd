@@ -40,6 +40,8 @@ func _snap_down():
 		return
 	_agent.check_down.force_raycast_update()
 	if _agent.check_down.is_colliding():
+		if !GlobalGameState.is_unlocked('landbound') && !TileData.is_tile_water(_agent.current_tile_type):
+			_agent.hurt(5, Vector2(0, -10))
 		_agent.move_and_collide(Vector2(0, 16))
 		_agent.attached = Enums.AttachSide.DOWN
 		return

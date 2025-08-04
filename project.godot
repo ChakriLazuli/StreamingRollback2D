@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Area2D",
+"class": "AbilityPickup",
+"language": "GDScript",
+"path": "res://scripts/pickups/AbilityPickup.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "Agent",
 "language": "GDScript",
@@ -74,6 +79,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/agents/components/JumpState.gd"
 }, {
+"base": "CanvasLayer",
+"class": "MessageBar",
+"language": "GDScript",
+"path": "res://scripts/ui/MessageBar.gd"
+}, {
 "base": "Node",
 "class": "MomentumHandler",
 "language": "GDScript",
@@ -135,6 +145,7 @@ _global_script_classes=[ {
 "path": "res://scripts/agents/components/WallJumpState.gd"
 } ]
 _global_script_class_icons={
+"AbilityPickup": "",
 "Agent": "",
 "AgentState": "",
 "AirDashState": "",
@@ -148,6 +159,7 @@ _global_script_class_icons={
 "IdleState": "",
 "InputBufferer": "",
 "JumpState": "",
+"MessageBar": "",
 "MomentumHandler": "",
 "MovementParamsHandler": "",
 "NetworkAnimationPlayer": "",
@@ -187,6 +199,7 @@ Enums="*res://scripts/Enums.gd"
 Movement="*res://scripts/agents/components/Movement.gd"
 PlayerRepository="*res://scripts/streaming/PlayerRepository.gd"
 TerrainRepository="*res://scripts/streaming/TerrainRepository.gd"
+UiMessageBus="*res://scripts/ui/UIMessageBus.gd"
 
 [display]
 

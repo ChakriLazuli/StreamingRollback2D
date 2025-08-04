@@ -34,7 +34,7 @@ func update(agent: Agent):
 	if agent.attached == Enums.AttachSide.RIGHT || agent.attached == Enums.AttachSide.LEFT:
 		if change_state(agent, _wall_cling):
 			return
-	if agent.current_input['dash']:
+	if agent.InputBufferer.is_within_buffer(agent, 'dash', false):
 		if change_state(agent, _air_dash):
 			return
 	if agent.current_input['jump']:

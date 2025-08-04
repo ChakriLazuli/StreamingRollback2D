@@ -26,7 +26,7 @@ func update(agent: Agent):
 	if agent.InputBufferer.is_within_buffer(agent, 'jump', false):
 		if change_state(agent, _jump):
 			return
-	if agent.current_input['dash']:
+	if agent.InputBufferer.is_within_buffer(agent, 'dash', false):
 		if change_state(agent, _dash):
 			return
 	

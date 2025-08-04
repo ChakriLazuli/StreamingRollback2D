@@ -28,7 +28,15 @@ func is_within_buffer(agent: Agent, input: String, use_small_buffer: bool) -> bo
 		buffer = buffer_size_small
 	match input:
 		'jump':
-			return agent.frames_since_jump_press < buffer && agent.frames_since_jump_press <= agent.frames_since_jump_release
+			var result = agent.frames_since_jump_press < buffer && agent.frames_since_jump_press <= agent.frames_since_jump_release
+			if result: # consume input by advancing buffer
+				agent.frames_since_jump_press += buffer_size
+				agent.frames_since_jump_release += buffer_size
+			return result
 		'dash':
-			return agent.frames_since_dash_press < buffer && agent.frames_since_dash_press <= agent.frames_since_dash_release
+			var result = agent.frames_since_dash_press < buffer && agent.frames_since_dash_press <= agent.frames_since_dash_release
+			if result:
+				agent.frames_since_dash_press += buffer_size
+				agent.frames_since_dash_release += buffer_size
+			return result
 	return false

@@ -58,6 +58,7 @@ var current_velocity: Vector2
 var current_momentum: Vector2
 
 #Animation Physics
+export var drag_multiplier: int = 1
 export var drift_max: int = 0
 export var drift_retention_max: int = 0
 export var drift_acceleration: int = 0
@@ -102,9 +103,12 @@ func _network_process(input: Dictionary):
 	current_input = input
 	InputBufferer.update_inputs(self)
 	frames_in_state += 1
-	TerrainAttachHandler.update_attachment(self)
 	_update_tile_type()
+	TerrainAttachHandler.update_attachment(self)
+	_update_bubble()
 	_process_animation_step()
+	if current_state.is_grounded():
+		air_dashes_left = 1
 	current_state.update(self)
 	MomentumHandler.update_momentum(self)
 	_apply_displacement()
@@ -119,8 +123,16 @@ func _update_sprite_facing():
 		Enums.FacingSide.RIGHT:
 			SpriteNode.scale.x = 1
 
+func _update_bubble():
+	BubbleNode.visible = has_airdash() && !TileData.is_tile_water(current_tile_type)
+
+func has_airdash() -> bool:
+	return air_dashes_left > 0 && GlobalGameState.is_unlocked('airdash')
+
 func _update_tile_type():
 	current_tile_type = TerrainRepository.tile_map.get_tile_type_at_position(global_position)
+	if TileData.is_tile_water(current_tile_type):
+		air_dashes_left = 1
 
 func _process_animation_step():
 	animation_delta_new = animation - animation_prev
@@ -153,6 +165,7 @@ func reset_animation_y():
 	animation_delta.y = 0
 
 func hurt(frames: int, momentum: Vector2):
+	current_velocity.y = 0
 	state_timer = frames
 	current_momentum += momentum
 	current_state.change_state(self, _hurt_state)
@@ -191,6 +204,7 @@ func _save_state() -> Dictionary:
 		frames_since_dash_release = frames_since_dash_release,
 		frames_since_jump_press = frames_since_jump_press,
 		frames_since_jump_release = frames_since_jump_release,
+		drag_multiplier = drag_multiplier,
 	}
 
 func _load_state(state: Dictionary):
@@ -223,3 +237,4 @@ func _load_state(state: Dictionary):
 	frames_since_dash_release = state['frames_since_dash_release']
 	frames_since_jump_press = state['frames_since_jump_press']
 	frames_since_jump_release = state['frames_since_jump_release']
+	drag_multiplier = state['drag_multiplier']

@@ -20,7 +20,7 @@ func update(agent: Agent):
 		if change_state(agent, _grounded):
 			return
 	if agent.attached == Enums.AttachSide.RIGHT || agent.attached == Enums.AttachSide.LEFT:
-		if !agent.current_input['jump']:
+		if !agent.InputBufferer.is_within_buffer(agent, 'jump', false):
 			if change_state(agent, _wall_cling):
 				return
 	if !agent.MovementAnimationPlayer.is_playing():
@@ -40,6 +40,7 @@ func initialize(agent: Agent):
 	agent.reset_animation_y()
 	agent.MovementAnimationPlayer.play(animation)
 	zero_fall_vars(agent)
+	agent.current_velocity = Vector2.ZERO
 
 func clear_used_vars(agent: Agent):
 	agent.reset_animation_y()

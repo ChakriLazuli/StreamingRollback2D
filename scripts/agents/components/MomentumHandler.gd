@@ -26,8 +26,8 @@ func _update_tile_data():
 
 func _update_momentum_drag():
 	_momentum_diff = _tile_momentum -_agent.current_momentum
-	_directed_drag.x = _tile_drag * sign(_momentum_diff.x)
-	_directed_drag.y = _tile_drag * sign(_momentum_diff.y)
+	_directed_drag.x = _tile_drag * sign(_momentum_diff.x) * _agent.drag_multiplier
+	_directed_drag.y = _tile_drag * sign(_momentum_diff.y) * _agent.drag_multiplier
 	_momentum_adjust = Movement.get_adjustmentv(_momentum_diff, _directed_drag)
 	_agent.current_momentum += _momentum_adjust
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://assets/sprites/carp/carp.png" type="Texture" id=1]
 [ext_resource path="res://scripts/agents/Player.gd" type="Script" id=2]
@@ -18,10 +18,11 @@
 [ext_resource path="res://scripts/agents/components/WallDashState.gd" type="Script" id=16]
 [ext_resource path="res://scripts/agents/components/HurtState.gd" type="Script" id=17]
 [ext_resource path="res://scripts/agents/components/InputBufferer.gd" type="Script" id=18]
+[ext_resource path="res://assets/sprites/placeholders/player.png" type="Texture" id=19]
 
 [sub_resource type="Animation" id=10]
 resource_name = "AirDashDown"
-length = 0.33335
+length = 0.416684
 step = 0.0166667
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:animation:x")
@@ -40,8 +41,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 300, -0.183333, -439.171, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.0666667, -20.024, 500, -0.116666, -222.979, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/2/type = "bezier"
 tracks/2/path = NodePath(".:drift_acceleration")
@@ -51,12 +52,22 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"times": PoolRealArray( 0, 0.416667 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 
 [sub_resource type="Animation" id=11]
 resource_name = "AirDashDownSide"
-length = 0.33335
+length = 0.416684
 step = 0.0166667
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:animation:x")
@@ -65,8 +76,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -78.8405, 160, -0.166667, -267.882, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.0833333, -0.137711, 300, -0.15, -38.1897, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -75,8 +86,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 340, -0.216667, -170.239, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.05, 180.266, 460, -0.133334, -76.5217, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/2/type = "bezier"
 tracks/2/path = NodePath(".:drift_acceleration")
@@ -86,12 +97,22 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"times": PoolRealArray( 0, 0.416667 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 
 [sub_resource type="Animation" id=12]
 resource_name = "AirDashSide"
-length = 0.33335
+length = 0.416684
 step = 0.0166667
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:animation:x")
@@ -100,8 +121,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.05, -85.0323, 400, -0.250001, -262.13, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.116667, -0.483284, 0.116667, 0.483284, 540, -0.283334, -295.86, 0.283334, 295.86 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -110,8 +131,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, 0, -0.216667, -215.059, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.05, -35.79, 0, -0.166666, -113.187, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/2/type = "bezier"
 tracks/2/path = NodePath(".:drift_acceleration")
@@ -121,12 +142,22 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"times": PoolRealArray( 0, 0.416667 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 5, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 
 [sub_resource type="Animation" id=9]
 resource_name = "AirDashUp"
-length = 0.33335
+length = 0.416684
 step = 0.0166667
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:animation:x")
@@ -145,8 +176,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0333333, -109.507, -360, -0.216667, 1.18494, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.05, -240.461, -600, -0.166668, 87.7642, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/2/type = "bezier"
 tracks/2/path = NodePath(".:drift_acceleration")
@@ -156,12 +187,22 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"times": PoolRealArray( 0, 0.416667 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 5, -0.4, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 
 [sub_resource type="Animation" id=13]
 resource_name = "AirDashUpSide"
-length = 0.33335
+length = 0.416684
 step = 0.0166667
 tracks/0/type = "bezier"
 tracks/0/path = NodePath(".:animation:x")
@@ -170,8 +211,8 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.0833333, -122.183, 160, -0.250001, -122.13, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.25, 0, 0.0833333, 226.507, 300, -0.216667, 71.6588, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/1/type = "bezier"
 tracks/1/path = NodePath(".:animation:y")
@@ -180,8 +221,8 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"points": PoolRealArray( 0, -0.25, 0, 0.05, 51.1859, -340, -0.216667, 74.4751, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"points": PoolRealArray( 0, -0.05, 1.5233, 0.05, -1.5233, -520, -0.150001, 157.053, 0.150001, -157.053 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 tracks/2/type = "bezier"
 tracks/2/path = NodePath(".:drift_acceleration")
@@ -191,7 +232,17 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
-"times": PoolRealArray( 0, 0.333333 )
+"times": PoolRealArray( 0, 0.416667 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 5, -0.4, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.416667 )
 }
 
 [sub_resource type="Animation" id=4]
@@ -205,7 +256,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"points": PoolRealArray( 0, -0.00134526, -8.40068, 0.0166667, 104.078, 320, -0.0166667, -81.768, 0.0424866, 208.442 ),
+"points": PoolRealArray( 0, -0.00134526, -8.40068, 0.0166667, 104.078, 380, -0.0166667, -81.768, 0.0424866, 208.442 ),
 "times": PoolRealArray( 0, 0.133333 )
 }
 tracks/1/type = "bezier"
@@ -242,6 +293,16 @@ tracks/1/enabled = true
 tracks/1/keys = {
 "points": PoolRealArray( 16, -0.25, 0, 0.25, 0, 2, 0, 9.06241, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.0666668, 0.6 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:drag_multiplier")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
 }
 
 [sub_resource type="Animation" id=8]
@@ -289,6 +350,16 @@ tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
 "points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.6 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath(".:drag_multiplier")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0, 2, -0.25, 0, 0.25, 0 ),
 "times": PoolRealArray( 0, 0.6 )
 }
 
@@ -363,8 +434,10 @@ collision_mask = 2
 script = ExtResource( 2 )
 default_state_path = NodePath("FallState")
 hurt_state_path = NodePath("HurtState")
+drag_multiplier = 2.74891
 drift_max = 0.0
-drift_acceleration = 0.0
+drift_acceleration = 1.09956
+animation = Vector2( 298.634, -265.482 )
 
 [node name="MovementAnimationPlayer" type="AnimationPlayer" parent="."]
 anims/AirDashDown = SubResource( 10 )
@@ -513,6 +586,8 @@ __meta__ = {
 }
 
 [node name="SpriteBubble" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.0980392 )
+texture = ExtResource( 19 )
 
 [node name="MovementParamsHandler" type="Node" parent="."]
 script = ExtResource( 8 )

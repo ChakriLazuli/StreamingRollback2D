@@ -33,7 +33,7 @@ func update(agent: Agent):
 	if !agent.MovementAnimationPlayer.is_playing():
 		if change_state(agent, _fall):
 			return
-	if agent.current_input['dash']:
+	if agent.InputBufferer.is_within_buffer(agent, 'dash', false):
 		if change_state(agent, _air_dash):
 			return
 	
@@ -52,8 +52,10 @@ func initialize(agent: Agent):
 	agent.MovementAnimationPlayer.play(animation)
 	agent.attach_grace_period_down = jump_reattach_grace_period
 	zero_drift_vars(agent)
+	agent.current_momentum.y = 0
 
 func clear_used_vars(agent: Agent):
 	agent.reset_animation_y()
 	agent.MovementAnimationPlayer.stop()
 	agent.attach_grace_period_down = 0
+	agent.drag_multiplier = 1

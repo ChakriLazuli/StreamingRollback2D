@@ -13,7 +13,7 @@ func initialize(agent: Agent):
 func change_state(agent: Agent, new_state: AgentState) -> bool:
 	if new_state == null || new_state == self:
 		return false
-	if !is_available():
+	if !new_state.is_available(agent):
 		return false
 	clear_used_vars(agent)
 	agent.SpriteAnimationPlayer.stop()
@@ -40,5 +40,5 @@ func zero_drift_vars(agent: Agent):
 func is_grounded():
 	return false
 
-func is_available():
+func is_available(agent: Agent) -> bool:
 	return true
